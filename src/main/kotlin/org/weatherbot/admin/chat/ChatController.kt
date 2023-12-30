@@ -7,5 +7,5 @@ import org.weatherbot.admin.chat.db.Chat
 @RestController
 class ChatController(val chatService: ChatService) {
     @GetMapping("/chats")
-    fun getAllChats(): List<Chat> = chatService.getAllChats()
+    fun getAllChats(): Iterable<Chat> = chatService.getAllChats()
 }

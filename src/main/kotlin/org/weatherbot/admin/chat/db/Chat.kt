@@ -1,12 +1,10 @@
 package org.weatherbot.admin.chat.db
 
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import org.weatherbot.admin.chat.Platform
 
 @Entity
+@Table(name = "chat")
 class Chat(
     @Id val id: String,
     val name: String,
