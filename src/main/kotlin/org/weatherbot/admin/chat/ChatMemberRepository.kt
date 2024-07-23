@@ -7,4 +7,5 @@ import org.weatherbot.admin.model.ChatMemberId
 
 @Repository
 interface ChatMemberRepository : CrudRepository<ChatMember, ChatMemberId> {
+    fun findChatMembersByIdChatId(chatId: String): List<ChatMember>
 }

@@ -15,6 +15,7 @@ class ChatController(val chatService: ChatService) {
     @GetMapping("/v1/chats/{chatId}")
     fun getSingleChat(@PathVariable chatId: String): Optional<Chat> = chatService.getSingleChat(chatId)
 
-    @GetMapping("/chats/{chatId}/members")
-    fun getChatUsers(@PathVariable chatId: String): Iterable<ChatMember> = chatService.getChatMembers(chatId)
+    @GetMapping("/v1/chats/{chatId}/members")
+    fun getChatMembers(@PathVariable chatId: String): Iterable<ChatMember> = chatService.getChatMembers(chatId)
+
 }

@@ -8,6 +8,10 @@ import java.util.*
 @Service
 class ChatService(private val chatRepository: ChatRepository, private val chatMemberRepository: ChatMemberRepository) {
     fun getAllChats(): Iterable<Chat> = chatRepository.findAll()
+
     fun getSingleChat(chatId: String): Optional<Chat> = chatRepository.findById(chatId)
-    fun getChatMembers(chatId: String): Iterable<ChatMember> = chatMemberRepository.findAll()
+
+    fun getChatMembers(chatId: String): Iterable<ChatMember> =
+        chatMemberRepository.findChatMembersByIdChatId(chatId);
+
 }
