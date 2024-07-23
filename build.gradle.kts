@@ -1,13 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.graalvm.buildtools.native") version "0.9.28"
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.spring") version "1.9.21"
-    kotlin("plugin.noarg") version "1.9.21"
-    kotlin("plugin.jpa") version "1.9.21"
+    kotlin("jvm") version "2.0.0"
+    kotlin("plugin.spring") version "2.0.0"
+    kotlin("plugin.noarg") version "2.0.0"
+    kotlin("plugin.jpa") version "2.0.0"
 }
 
 group = "org.weatherbot"
@@ -22,20 +20,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("org.postgresql:postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "21"
-    }
+    implementation("org.springframework.boot:spring-boot-starter-web:3.3.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.0")
+    developmentOnly("org.springframework.boot:spring-boot-devtools:3.3.2")
+    runtimeOnly("org.postgresql:postgresql:42.7.3")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.3.2")
 }
 
 tasks.withType<Test> {

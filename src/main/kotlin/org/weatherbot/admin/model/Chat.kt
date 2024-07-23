@@ -1,4 +1,4 @@
-package org.weatherbot.admin.chat.db
+package org.weatherbot.admin.model
 
 import jakarta.persistence.*
 import org.weatherbot.admin.chat.Platform
