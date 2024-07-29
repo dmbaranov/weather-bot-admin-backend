@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-class ChatController(val chatService: ChatService) {
+class ChatController(private val chatService: ChatService) {
     @GetMapping("/v1/chats")
     fun getAllChats(): Iterable<Chat> = chatService.getAllChats()
 
