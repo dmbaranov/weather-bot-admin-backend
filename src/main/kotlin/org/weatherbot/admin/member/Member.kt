@@ -1,4 +1,4 @@
-package org.weatherbot.admin.model
+package org.weatherbot.admin.member
 
 import jakarta.persistence.Embeddable
 import jakarta.persistence.EmbeddedId
