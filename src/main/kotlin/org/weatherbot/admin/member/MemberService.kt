@@ -10,4 +10,16 @@ class MemberService(private val memberRepository: MemberRepository) {
 
         return memberRepository.findAll(spec)
     }
+
+    fun updateMember(chatId: String, userId: String, updateData: UpdateMemberDto): ChatMember? {
+        var member = memberRepository.findById(ChatMemberId(chatId, userId)).orElseThrow {
+            MemberNotFound("User with id $userId from chat $chatId not found")
+        }
+
+        updateData.banned?.let { member.banned = it }
+        updateData.deleted?.let { member.deleted = it }
+        updateData.moderator?.let { member.moderator = it }
+
+        return memberRepository.save(member)
+    }
 }

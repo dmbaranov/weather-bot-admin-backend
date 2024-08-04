@@ -13,7 +13,7 @@ import java.io.Serializable
 
 
 @Embeddable
-data class ChatMemberId(val botUserId: String, val chatId: String) : Serializable
+data class ChatMemberId(val chatId: String, val botUserId: String) : Serializable
 
 @Entity
 @Table(name = "bot_user")
@@ -34,7 +34,7 @@ class ChatMember(
     @JoinColumn(name = "bot_user_id")
     val botUser: BotUser,
 
-    val deleted: Boolean,
-    val banned: Boolean,
-    val moderator: Boolean
+    var deleted: Boolean,
+    var banned: Boolean,
+    var moderator: Boolean
 )
