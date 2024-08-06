@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.spring") version "2.0.0"
     kotlin("plugin.noarg") version "2.0.0"
     kotlin("plugin.jpa") version "2.0.0"
+    kotlin("kapt") version "2.0.0"
 }
 
 group = "org.weatherbot"
@@ -24,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.0")
+    kapt("org.hibernate:hibernate-jpamodelgen:6.5.2.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools:3.3.2")
     runtimeOnly("org.postgresql:postgresql:42.7.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test:3.3.2")
@@ -31,4 +33,8 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+kapt {
+    correctErrorTypes = true
 }

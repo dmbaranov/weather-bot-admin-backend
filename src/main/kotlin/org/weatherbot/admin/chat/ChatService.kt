@@ -10,5 +10,4 @@ class ChatService(private val chatRepository: ChatRepository) {
     fun getSingleChat(chatId: String): Optional<Chat> = chatRepository.findById(chatId)
 
     fun getPlatformChats(platform: Platform): Iterable<Chat> = chatRepository.findAllByPlatform(platform)
-
 }

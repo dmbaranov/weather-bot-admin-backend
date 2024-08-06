@@ -6,7 +6,7 @@ object MemberSpecifications {
     fun hasChatId(chatId: String?): Specification<ChatMember>? = chatId?.let {
         Specification { root, _, criteriaBuilder ->
             criteriaBuilder.equal(
-                root.get<String>("id").get<String>("chatId"), it
+                root.get(ChatMember_.id).get(ChatMemberId_.chatId), it
             )
         }
 
@@ -15,7 +15,7 @@ object MemberSpecifications {
     fun hasUserId(userId: String?): Specification<ChatMember>? = userId?.let {
         Specification { root, _, criteriaBuilder ->
             criteriaBuilder.equal(
-                root.get<String>("botUser").get<String>("id"), it
+                root.get(ChatMember_.botUser).get(BotUser_.id), it
             )
         }
     }
