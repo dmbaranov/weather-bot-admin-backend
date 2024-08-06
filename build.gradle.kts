@@ -35,6 +35,10 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 kapt {
     correctErrorTypes = true
 }
