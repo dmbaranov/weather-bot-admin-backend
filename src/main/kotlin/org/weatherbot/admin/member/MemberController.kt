@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class MemberController(private val memberService: MemberService) {
     @GetMapping("/v1/members")
-    fun getMembers(@RequestParam chatId: String): List<ChatMember> = memberService.getMembers(chatId)
+    fun getMembers(@RequestParam chatId: String, @RequestParam userId: String?): List<ChatMember> =
+        memberService.getMembers(chatId, userId)
 
     @PutMapping("/v1/members/{chatId}/{userId}")
     fun updateMembers(

@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class MemberService(private val memberRepository: MemberRepository) {
-    fun getMembers(chatId: String): List<ChatMember> {
-        val spec = Specification.where(MemberSpecifications.hasChatId(chatId))
+    fun getMembers(chatId: String, userId: String?): List<ChatMember> {
+        val spec =
+            Specification.where(MemberSpecifications.hasChatId(chatId)).and(MemberSpecifications.hasUserId(userId))
 
         return memberRepository.findAll(spec)
     }
