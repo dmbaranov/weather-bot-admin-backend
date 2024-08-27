@@ -19,7 +19,7 @@ data class ChatMemberId(val chatId: String, val botUserId: String) : Serializabl
 @Table(name = "bot_user")
 class BotUser(
     @Id val id: String,
-    val name: String,
+    var name: String,
     val isPremium: Boolean,
 )
 

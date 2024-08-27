@@ -17,6 +17,7 @@ class MemberService(private val memberRepository: MemberRepository) {
             MemberNotFound("User with id $userId from chat $chatId not found")
         }
 
+        updateData.name?.let { member.botUser.name = it }
         updateData.banned?.let { member.banned = it }
         updateData.deleted?.let { member.deleted = it }
         updateData.moderator?.let { member.moderator = it }

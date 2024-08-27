@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ChatRepository : CrudRepository<Chat, String> {
-    fun findAllByPlatform(platform: Platform): List<Chat>
+    fun findAllByPlatform(platform: Platform): Iterable<Chat>
 }
