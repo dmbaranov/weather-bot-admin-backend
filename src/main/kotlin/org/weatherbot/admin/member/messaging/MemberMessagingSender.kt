@@ -9,16 +9,11 @@ import org.springframework.stereotype.Service
 class MemberMessagingSender(private val rabbitTemplate: RabbitTemplate) {
     private val mapper = jacksonObjectMapper().apply { registerModule(kotlinModule()) }
 
-    fun send(action: UserAction, data: Any) {
-        val message = mapOf(
-            "action" to action.name,
-            "data" to mapper.writeValueAsString(data)
-        ).entries.joinToString()
-
+    fun send(routingKey: MemberRoutingKey, data: Any) {
         rabbitTemplate.convertAndSend(
             MemberMessagingConfig.MEMBER_EXCHANGE,
-            MemberMessagingConfig.MEMBER_QUEUE,
-            message
+            routingKey.name,
+            mapper.writeValueAsString(data),
         )
     }
 }

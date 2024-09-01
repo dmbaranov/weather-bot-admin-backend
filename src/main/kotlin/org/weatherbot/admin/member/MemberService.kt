@@ -4,7 +4,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import org.weatherbot.admin.member.messaging.MemberMessagingSender
-import org.weatherbot.admin.member.messaging.UserAction
+import org.weatherbot.admin.member.messaging.MemberRoutingKey
 
 @Service
 class MemberService(
@@ -29,7 +29,7 @@ class MemberService(
         updateData.deleted?.let { member.deleted = it }
         updateData.moderator?.let { member.moderator = it }
 
-        messagingSender.send(UserAction.UPDATE, member)
+        messagingSender.send(MemberRoutingKey.UPDATED, member)
 
         return memberRepository.save(member)
     }
