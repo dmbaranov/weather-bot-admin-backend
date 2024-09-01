@@ -3,9 +3,14 @@ package org.weatherbot.admin.member
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
+import org.weatherbot.admin.member.messaging.MemberMessagingSender
+import org.weatherbot.admin.member.messaging.UserAction
 
 @Service
-class MemberService(private val memberRepository: MemberRepository) {
+class MemberService(
+    private val memberRepository: MemberRepository,
+    private val messagingSender: MemberMessagingSender
+) {
     fun getMembers(chatId: String, userId: String?): List<ChatMember> {
         val spec =
             Specification.where(MemberSpecifications.hasChatId(chatId)).and(MemberSpecifications.hasUserId(userId))
@@ -23,6 +28,8 @@ class MemberService(private val memberRepository: MemberRepository) {
         updateData.banned?.let { member.banned = it }
         updateData.deleted?.let { member.deleted = it }
         updateData.moderator?.let { member.moderator = it }
+
+        messagingSender.send(UserAction.UPDATE, member)
 
         return memberRepository.save(member)
     }

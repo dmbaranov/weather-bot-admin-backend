@@ -23,8 +23,10 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.3.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.2")
+    implementation("org.springframework.boot:spring-boot-starter-amqp:3.3.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     kapt("org.hibernate:hibernate-jpamodelgen:6.5.2.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools:3.3.2")
     runtimeOnly("org.postgresql:postgresql:42.7.3")
