@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/coop_weather_bot
+    username: postgres
+    password: postgres
+  devtools:
+    livereload:
+      enabled: true
+  sql:
+    init:
+      mode: always
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+server:
+  error:
+    include-exception: false
+    include-message: never
+    include-stacktrace: never
+  servlet:
+    context-path: /api
