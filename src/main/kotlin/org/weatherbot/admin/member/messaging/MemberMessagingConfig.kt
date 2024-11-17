@@ -6,7 +6,7 @@ import org.springframework.amqp.core.TopicExchange
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-enum class MemberRoutingKey(private val key: String) {
+enum class MemberRoutingKey(val key: String) {
     UPDATED("member.updated"),
 }
 
@@ -25,5 +25,5 @@ class MemberMessagingConfig {
 
     @Bean
     fun memberUpdateBinding() =
-        BindingBuilder.bind(memberUpdatedQueue()).to(memberExchange()).with(MemberRoutingKey.UPDATED.name)
+        BindingBuilder.bind(memberUpdatedQueue()).to(memberExchange()).with(MemberRoutingKey.UPDATED.key)
 }

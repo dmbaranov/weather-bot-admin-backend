@@ -12,7 +12,7 @@ class MemberMessagingSender(private val rabbitTemplate: RabbitTemplate) {
     fun send(routingKey: MemberRoutingKey, data: Any) {
         rabbitTemplate.convertAndSend(
             MemberMessagingConfig.MEMBER_EXCHANGE,
-            routingKey.name,
+            routingKey.key,
             mapper.writeValueAsString(data),
         )
     }
