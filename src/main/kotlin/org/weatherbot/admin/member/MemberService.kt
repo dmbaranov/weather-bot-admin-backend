@@ -3,13 +3,12 @@ package org.weatherbot.admin.member
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.weatherbot.admin.member.messaging.MemberMessagingSender
-import org.weatherbot.admin.member.messaging.MemberRoutingKey
+import org.weatherbot.admin.messaging.MessagingService
 
 @Service
 class MemberService(
     private val memberRepository: MemberRepository,
-    private val messagingSender: MemberMessagingSender
+    private val messagingService: MessagingService
 ) {
     fun getMembers(chatId: String, userId: String?): List<ChatMember> {
         val spec =
@@ -20,7 +19,7 @@ class MemberService(
     }
 
     fun updateMember(chatId: String, userId: String, updateData: UpdateMemberDto): ChatMember? {
-        var member = memberRepository.findById(ChatMemberId(chatId, userId)).orElseThrow {
+        val member = memberRepository.findById(ChatMemberId(chatId, userId)).orElseThrow {
             MemberNotFound("User with id $userId from chat $chatId not found")
         }
 
@@ -29,7 +28,7 @@ class MemberService(
         updateData.deleted?.let { member.deleted = it }
         updateData.moderator?.let { member.moderator = it }
 
-        messagingSender.send(MemberRoutingKey.UPDATED, member)
+        messagingService.send(MemberRoutingKey.UPDATED.key, member)
 
         return memberRepository.save(member)
     }

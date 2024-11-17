@@ -1,4 +1,4 @@
-package org.weatherbot.admin.member.messaging
+package org.weatherbot.admin.messaging
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.kotlinModule
@@ -6,14 +6,14 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
 
 @Service
-class MemberMessagingSender(private val rabbitTemplate: RabbitTemplate) {
+class MessagingService(private val rabbitTemplate: RabbitTemplate) {
     private val mapper = jacksonObjectMapper().apply { registerModule(kotlinModule()) }
 
-    fun send(routingKey: MemberRoutingKey, data: Any) {
+    fun send(routingKey: String, data: Any) {
         rabbitTemplate.convertAndSend(
-            MemberMessagingConfig.MEMBER_EXCHANGE,
-            routingKey.key,
-            mapper.writeValueAsString(data),
+            MessagingConfig.MESSAGING_EXCHANGE,
+            routingKey,
+            mapper.writeValueAsString(data)
         )
     }
 }
