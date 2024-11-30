@@ -13,7 +13,7 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
     fun getPlatformChats(platform: Platform): Iterable<Chat> = chatRepository.findAllByPlatform(platform)
 
     fun sendMessage(chatId: String, message: SendMessageDto): Boolean {
-        messagingService.send(ChatRoutingKey.MESSAGE.key, message.message)
+        messagingService.send(ChatRoutingKey.MESSAGE.key, message)
 
         return true
     }
