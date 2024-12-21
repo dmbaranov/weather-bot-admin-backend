@@ -1,6 +1,7 @@
 package org.weatherbot.admin.chat
 
 import org.springframework.stereotype.Service
+import org.weatherbot.admin.common.Platform
 import org.weatherbot.admin.messaging.MessagingService
 
 @Service
@@ -12,8 +13,8 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
 
     fun getPlatformChats(platform: Platform): Iterable<Chat> = chatRepository.findAllByPlatform(platform)
 
-    fun sendMessage(chatId: String, message: SendMessageDto): Boolean {
-        messagingService.send(ChatRoutingKey.MESSAGE.key, message)
+    fun sendMessage(platform: Platform, chatId: String, message: SendMessageDto): Boolean {
+        messagingService.send(platform, ChatRoutingKey.MESSAGE.key, message)
 
         return true
     }

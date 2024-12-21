@@ -1,6 +1,7 @@
 package org.weatherbot.admin.chat
 
 import jakarta.persistence.*
+import org.weatherbot.admin.common.Platform
 
 @Entity
 @Table(name = "chat")

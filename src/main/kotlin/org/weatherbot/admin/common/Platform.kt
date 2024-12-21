@@ -1,4 +1,4 @@
-package org.weatherbot.admin.chat
+package org.weatherbot.admin.common
 
 import com.fasterxml.jackson.annotation.JsonValue
 
