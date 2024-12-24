@@ -20,4 +20,10 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
 
         return true
     }
+
+    fun updateChatSwearwords(platform: Platform, chatId: String, message: UpdateChatSwearwordsDto): Boolean {
+        messagingService.send(platform, ChatRoutingKey.SWEARWORDS_UPDATED.key, message)
+
+        return true
+    }
 }

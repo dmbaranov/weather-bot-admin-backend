@@ -12,6 +12,7 @@ enum class MemberRoutingKey(val key: String) {
 }
 
 
+// TODO: not used
 @Configuration
 class MemberMessagingConfig(private val exchange: TopicExchange, private val messagingService: MessagingService) {
     @Bean

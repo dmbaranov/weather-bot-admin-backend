@@ -8,7 +8,8 @@ import org.weatherbot.admin.messaging.MessagingService
 
 enum class ChatRoutingKey(val key: String) {
     MESSAGE("chat.message"),
-    UPDATED("chat.updated")
+    SWEARWORDS_UPDATED("chat.swearwords-updated")
+
 }
 
 @Configuration

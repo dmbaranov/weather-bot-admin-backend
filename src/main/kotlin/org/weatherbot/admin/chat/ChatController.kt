@@ -21,4 +21,11 @@ class ChatController(private val chatService: ChatService) {
     @PostMapping("/v1/chats/{platform}/{chatId}/message")
     fun sendMessage(@PathVariable platform: Platform, @PathVariable chatId: String, @RequestBody body: SendMessageDto) =
         chatService.sendMessage(platform, chatId, body)
+
+    @PutMapping("/v1/chats/{platform}/{chatId}/swearwords")
+    fun updateChatSwearwords(
+        @PathVariable platform: Platform,
+        @PathVariable chatId: String,
+        @RequestBody body: UpdateChatSwearwordsDto
+    ) = chatService.updateChatSwearwords(platform, chatId, body)
 }

@@ -28,8 +28,6 @@ class MemberService(
         updateData.deleted?.let { member.deleted = it }
         updateData.moderator?.let { member.moderator = it }
 
-//        messagingService.send(Platform.telegram MemberRoutingKey.UPDATED.key, member)
-
         return memberRepository.save(member)
     }
 }
