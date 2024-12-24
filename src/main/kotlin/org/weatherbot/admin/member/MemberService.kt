@@ -3,13 +3,9 @@ package org.weatherbot.admin.member
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.weatherbot.admin.messaging.MessagingService
 
 @Service
-class MemberService(
-    private val memberRepository: MemberRepository,
-    private val messagingService: MessagingService
-) {
+class MemberService(private val memberRepository: MemberRepository) {
     fun getMembers(chatId: String, userId: String?): List<ChatMember> {
         val spec =
             Specification.where(MemberSpecifications.hasChatId(chatId)).and(MemberSpecifications.hasUserId(userId))

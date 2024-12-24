@@ -21,9 +21,13 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
         return true
     }
 
-    fun updateChatSwearwords(platform: Platform, chatId: String, message: UpdateChatSwearwordsDto): Boolean {
-        messagingService.send(platform, ChatRoutingKey.SWEARWORDS_UPDATED.key, message)
+    fun updateChatSwearwords(platform: Platform, chatId: String, updatedData: UpdateChatSwearwordsDto): Chat {
+        val chat = chatRepository.findById(chatId).orElseThrow { ChatNotFound("Chat with id $chatId not found") }
 
-        return true
+        updatedData.swearwordsConfig.let { chat.swearwordsConfig = it }
+
+        messagingService.send(platform, ChatRoutingKey.SWEARWORDS_UPDATED.key, updatedData)
+
+        return chatRepository.save(chat)
     }
 }

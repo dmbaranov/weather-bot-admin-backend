@@ -16,5 +16,5 @@ class Chat(
     @Id val id: String,
     val name: String,
     @Enumerated(EnumType.STRING) val platform: Platform,
-    @Enumerated(EnumType.STRING) val swearwordsConfig: ChatSwearwords
+    @Enumerated(EnumType.STRING) var swearwordsConfig: ChatSwearwords
 )
