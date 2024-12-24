@@ -11,6 +11,9 @@ class ChatController(private val chatService: ChatService) {
     @GetMapping("/v1/chats/{chatId}")
     fun getSingleChat(@PathVariable chatId: String): Chat = chatService.getSingleChat(chatId)
 
+    @GetMapping("/v1/chats/swearwords")
+    fun getChatSwearwords(): List<ChatSwearwords> = chatService.getChatSwearwords()
+
     // deprecated
     @GetMapping("/v1/chats/platform/{platform}")
     fun getPlatformChats(@PathVariable platform: Platform): Iterable<Chat> = chatService.getPlatformChats(platform)

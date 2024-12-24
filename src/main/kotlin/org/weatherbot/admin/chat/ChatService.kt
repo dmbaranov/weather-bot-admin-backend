@@ -11,6 +11,8 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
     fun getSingleChat(chatId: String): Chat =
         chatRepository.findById(chatId).orElseThrow { ChatNotFound("Chat with id $chatId not found") }
 
+    fun getChatSwearwords(): List<ChatSwearwords> = ChatSwearwords.entries
+
     fun getPlatformChats(platform: Platform): Iterable<Chat> = chatRepository.findAllByPlatform(platform)
 
     fun sendMessage(platform: Platform, chatId: String, message: SendMessageDto): Boolean {
