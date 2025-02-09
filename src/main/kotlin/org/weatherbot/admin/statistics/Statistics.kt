@@ -1,8 +1,8 @@
 package org.weatherbot.admin.statistics
 
-import jakarta.persistence.*
-import org.weatherbot.admin.chat.Chat
-import org.weatherbot.admin.member.BotUser
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "command_statistics")
@@ -11,12 +11,6 @@ class Statistics(
     val id: Long,
     val command: String,
     val timestamp: String,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_id")
-    val chat: Chat,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bot_user_id")
-    val user: BotUser
+    val chatId: String,
+    val botUserId: String
 )
