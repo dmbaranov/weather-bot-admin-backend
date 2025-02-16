@@ -13,7 +13,7 @@ data class ApiErrorResponse(val status: Int, val error: String, val message: Str
 class CustomExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleHttpMessageNotReadable(e: HttpMessageNotReadableException): ResponseEntity<ApiErrorResponse> {
-        val cause = e.cause;
+        val cause = e.cause
 
         if (cause is UnrecognizedPropertyException) {
             return ResponseEntity(
