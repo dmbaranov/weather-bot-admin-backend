@@ -18,8 +18,8 @@ class ChatConfigService(
             ChatConfigInvalid("Chat $chatId does not exist")
         }
 
-        chatConfigRepository.findByChatId(chatId).orElseThrow {
-            ChatConfigInvalid("Config for chat $chatId already exists")
+        chatConfigRepository.findByChatId(chatId).ifPresent {
+            throw ChatConfigInvalid("Config for chat $chatId already exists")
         }
 
         return chatConfigRepository.save(ChatConfig(chatId = chatId, config = "{}"))
@@ -36,7 +36,7 @@ class ChatConfigService(
             throw ChatConfigInvalid("Config is not valid")
         }
 
-        existingConfig.config = chatConfig.config;
+        existingConfig.config = chatConfig.config
 
         return chatConfigRepository.save(existingConfig)
     }
