@@ -12,7 +12,7 @@ import org.weatherbot.admin.common.Platform
 class MessagingService(private val rabbitTemplate: RabbitTemplate) {
 
     fun send(platform: Platform, routingKey: RoutingKey, data: Any) {
-        val routingKeyWithPlatform = "${platform.platform}.${routingKey.pattern}"
+        val routingKeyWithPlatform = generatePlatformKey(platform, routingKey)
 
         rabbitTemplate.convertAndSend(
             MessagingConfig.MESSAGING_EXCHANGE,
@@ -21,16 +21,14 @@ class MessagingService(private val rabbitTemplate: RabbitTemplate) {
         )
     }
 
-    fun createCommonBindings(exchange: TopicExchange, routingKeys: List<RoutingKey>): Declarables {
+    fun createCommonBindings(exchange: TopicExchange, routingKeys: Collection<RoutingKey>): Declarables {
         val platforms = Platform.entries
 
         val bindings = platforms.flatMap { platform ->
             routingKeys.flatMap { routingKey ->
-                val queueName = "${platform.platform}.${routingKey.pattern}"
-                val routingKeyValue = "${platform.platform}.${routingKey.pattern}"
-
-                val queue = Queue(queueName, false)
-                val binding = BindingBuilder.bind(queue).to(exchange).with(routingKeyValue)
+                val commonKey = generatePlatformKey(platform, routingKey)
+                val queue = Queue(commonKey, false)
+                val binding = BindingBuilder.bind(queue).to(exchange).with(commonKey)
 
                 listOf(queue, binding)
             }
@@ -38,4 +36,7 @@ class MessagingService(private val rabbitTemplate: RabbitTemplate) {
 
         return Declarables(bindings)
     }
+
+    private fun generatePlatformKey(platform: Platform, routingKey: RoutingKey) =
+        "${platform.platform}.${routingKey.pattern}"
 }
