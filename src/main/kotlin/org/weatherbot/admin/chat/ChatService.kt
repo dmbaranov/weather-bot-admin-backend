@@ -16,14 +16,14 @@ class ChatService(private val chatRepository: ChatRepository, private val messag
     fun getPlatformChats(platform: Platform): Iterable<Chat> = chatRepository.findAllByPlatform(platform)
 
     fun sendMessage(platform: Platform, chatId: String, message: SendMessageDto) =
-        messagingService.send(platform, ChatRoutingKey.MESSAGE.key, message)
+        messagingService.send(platform, ChatRoutingKey.MESSAGE, message)
 
     fun updateChatSwearwords(platform: Platform, chatId: String, updatedData: UpdateChatSwearwordsDto): Chat {
         val chat = chatRepository.findById(chatId).orElseThrow { ChatNotFound("Chat with id $chatId not found") }
 
         updatedData.swearwordsConfig.let { chat.swearwordsConfig = it }
 
-        messagingService.send(platform, ChatRoutingKey.SWEARWORDS_UPDATED.key, updatedData)
+        messagingService.send(platform, ChatRoutingKey.SWEARWORDS_UPDATED, updatedData)
 
         return chatRepository.save(chat)
     }

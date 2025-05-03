@@ -28,7 +28,6 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
     kapt("org.hibernate:hibernate-jpamodelgen:6.5.2.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools:3.3.2")
     runtimeOnly("org.postgresql:postgresql:42.7.3")

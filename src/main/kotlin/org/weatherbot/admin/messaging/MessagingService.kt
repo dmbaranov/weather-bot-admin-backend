@@ -1,7 +1,5 @@
 package org.weatherbot.admin.messaging
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.kotlinModule
 import org.springframework.amqp.core.BindingBuilder
 import org.springframework.amqp.core.Declarables
 import org.springframework.amqp.core.Queue
@@ -12,25 +10,24 @@ import org.weatherbot.admin.common.Platform
 
 @Service
 class MessagingService(private val rabbitTemplate: RabbitTemplate) {
-    private val mapper = jacksonObjectMapper().apply { registerModule(kotlinModule()) }
 
-    fun send(platform: Platform, routingKey: String, data: Any) {
-        val routingKeyWithPlatform = "$platform.$routingKey"
+    fun send(platform: Platform, routingKey: RoutingKey, data: Any) {
+        val routingKeyWithPlatform = "${platform.platform}.${routingKey.pattern}"
 
         rabbitTemplate.convertAndSend(
             MessagingConfig.MESSAGING_EXCHANGE,
             routingKeyWithPlatform,
-            mapper.writeValueAsString(data)
+            data
         )
     }
 
-    fun createCommonBindings(exchange: TopicExchange, routingKeys: List<String>): Declarables {
+    fun createCommonBindings(exchange: TopicExchange, routingKeys: List<RoutingKey>): Declarables {
         val platforms = Platform.entries
 
         val bindings = platforms.flatMap { platform ->
             routingKeys.flatMap { routingKey ->
-                val queueName = "${platform.platform}.${routingKey.replace(".", "-")}"
-                val routingKeyValue = "${platform.platform}.${routingKey}"
+                val queueName = "${platform.platform}.${routingKey.pattern}"
+                val routingKeyValue = "${platform.platform}.${routingKey.pattern}"
 
                 val queue = Queue(queueName, false)
                 val binding = BindingBuilder.bind(queue).to(exchange).with(routingKeyValue)

@@ -24,7 +24,7 @@ class ChatConfigService(
             throw ChatConfigInvalid("Config for chat $chatId already exists")
         }
 
-        messagingService.send(chat.platform, ChatConfigRoutingKey.UPDATED.key, mapOf("chatId" to chatId));
+        messagingService.send(chat.platform, ChatConfigRoutingKey.UPDATED, mapOf("chatId" to chatId));
         return chatConfigRepository.save(ChatConfig(chatId = chatId, config = "{}"))
     }
 
@@ -43,7 +43,7 @@ class ChatConfigService(
             throw ChatConfigInvalid("Config is not valid")
         }
 
-        messagingService.send(chat.platform, ChatConfigRoutingKey.UPDATED.key, mapOf("chatId" to chatConfig.chatId))
+        messagingService.send(chat.platform, ChatConfigRoutingKey.UPDATED, mapOf("chatId" to chatConfig.chatId))
         existingConfig.config = chatConfig.config
 
         return chatConfigRepository.save(existingConfig)
