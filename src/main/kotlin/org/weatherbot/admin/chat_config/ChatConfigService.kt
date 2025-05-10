@@ -15,6 +15,8 @@ class ChatConfigService(
         ChatConfigNotFound("Config for chat $chatId not found")
     }
 
+    fun getSwearwords(): List<ChatSwearwords> = ChatSwearwords.entries
+
     fun createChatConfig(chatId: String): ChatConfig {
         val chat = chatRepository.findById(chatId).orElseThrow {
             ChatConfigInvalid("Chat $chatId does not exist")
@@ -37,11 +39,7 @@ class ChatConfigService(
             ChatConfigInvalid("Chat ${chatConfig.chatId} does not exist")
         };
 
-        try {
-            jacksonObjectMapper().readTree(chatConfig.config)
-        } catch (_: Exception) {
-            throw ChatConfigInvalid("Config is not valid")
-        }
+        validateConfig(chatConfig.config)
 
         existingConfig.config = chatConfig.config
 
@@ -51,6 +49,16 @@ class ChatConfigService(
                 ChatConfigRoutingKey.UPDATED,
                 mapOf("chatId" to it.chatId)
             )
+        }
+    }
+
+    private fun validateConfig(config: String) {
+        try {
+            val parsedConfig = jacksonObjectMapper().readTree(config)
+
+            ChatSwearwords.valueOf(parsedConfig["swearwords"]["swearwords"].asText())
+        } catch (_: Exception) {
+            throw ChatConfigInvalid("Config is not valid")
         }
     }
 }

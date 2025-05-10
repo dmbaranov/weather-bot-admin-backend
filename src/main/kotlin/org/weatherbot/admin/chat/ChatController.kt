@@ -11,8 +11,6 @@ class ChatController(private val chatService: ChatService) {
     @GetMapping("/v1/chats/{chatId}")
     fun getSingleChat(@PathVariable chatId: String): Chat = chatService.getSingleChat(chatId)
 
-    @GetMapping("/v1/chats/swearwords")
-    fun getChatSwearwords(): List<ChatSwearwords> = chatService.getChatSwearwords()
 
     // deprecated
     @GetMapping("/v1/chats/platform/{platform}")
@@ -21,11 +19,4 @@ class ChatController(private val chatService: ChatService) {
     @PostMapping("/v1/chats/{platform}/{chatId}/message")
     fun sendMessage(@PathVariable platform: Platform, @PathVariable chatId: String, @RequestBody body: SendMessageDto) =
         chatService.sendMessage(platform, chatId, body)
-
-    @PutMapping("/v1/chats/{platform}/{chatId}/swearwords")
-    fun updateChatSwearwords(
-        @PathVariable platform: Platform,
-        @PathVariable chatId: String,
-        @RequestBody body: UpdateChatSwearwordsDto
-    ) = chatService.updateChatSwearwords(platform, chatId, body)
 }

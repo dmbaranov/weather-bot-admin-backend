@@ -7,6 +7,9 @@ class ChatConfigController(val chatConfigService: ChatConfigService) {
     @GetMapping("/v1/chatconfig/{chatId}")
     fun getChatConfig(@PathVariable chatId: String) = chatConfigService.getChatConfig(chatId)
 
+    @GetMapping("/v1/chatconfig/swearwords")
+    fun getSwearwords(): List<ChatSwearwords> = chatConfigService.getSwearwords()
+
     @PostMapping("/v1/chatconfig/{chatId}")
     fun createChatConfig(@PathVariable chatId: String): ChatConfig =
         chatConfigService.createChatConfig(chatId)

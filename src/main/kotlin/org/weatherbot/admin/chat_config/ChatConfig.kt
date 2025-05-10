@@ -1,6 +1,13 @@
 package org.weatherbot.admin.chat_config
 
+import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.*
+
+enum class ChatSwearwords(@JsonValue val swearwords: String) {
+    `fun`("fun"),
+    angry("angry"),
+    basic("basic")
+}
 
 @Entity
 @Table(name = "chat_config")
