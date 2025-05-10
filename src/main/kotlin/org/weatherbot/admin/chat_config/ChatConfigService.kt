@@ -43,9 +43,14 @@ class ChatConfigService(
             throw ChatConfigInvalid("Config is not valid")
         }
 
-        messagingService.send(chat.platform, ChatConfigRoutingKey.UPDATED, mapOf("chatId" to chatConfig.chatId))
         existingConfig.config = chatConfig.config
 
-        return chatConfigRepository.save(existingConfig)
+        return chatConfigRepository.save(existingConfig).also {
+            messagingService.send(
+                chat.platform,
+                ChatConfigRoutingKey.UPDATED,
+                mapOf("chatId" to it.chatId)
+            )
+        }
     }
 }
